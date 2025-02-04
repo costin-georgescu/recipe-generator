@@ -3,7 +3,6 @@ import {
   ChefHat,
   Loader2,
   UtensilsCrossed,
-  Send,
   Clock,
   GaugeCircle,
   Sparkles,
@@ -132,7 +131,7 @@ function App() {
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
-                <Send
+                <ChefHat
                   className="w-5 h-5 group-hover:rotate-6 transition-transform"
                   strokeWidth={1.5}
                 />
@@ -179,8 +178,9 @@ function App() {
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Ingredients Column */}
-              <div className="bg-warmgray-25 rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm">
-                <div className="flex items-center space-x-2 mb-4">
+              <div className="bg-[#fafaf5] rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.02)_50%)] bg-[size:30px_30px] opacity-10 pointer-events-none"></div>
+                <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <UtensilsCrossed
                     className="w-5 h-5 text-emerald-600"
                     strokeWidth={1.5}
@@ -189,25 +189,26 @@ function App() {
                     Ingredients
                   </h3>
                 </div>
-                <ul className="space-y-2.5">
+                <ul className="space-y-2.5 relative z-10">
                   {recipe.ingredients.map((ingredient, index) => (
                     <li
                       key={index}
-                      className="flex items-center space-x-3 animate-slide-in text-sm"
+                      className="flex items-center space-x-3 animate-slide-in text-sm border-b border-warmstone-200/30 pb-2 last:border-b-0"
                       style={{
                         animationDelay: `${index * 100}ms`,
                       }}
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
-                      <span className="text-warmstone-700">{ingredient}</span>
+                      <span>{ingredient}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {/* Instructions Column */}
-              <div className="bg-warmgray-25 rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm">
-                <div className="flex items-center space-x-2 mb-4">
+              <div className="bg-[#fafaf5] rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.02)_50%)] bg-[size:30px_30px] opacity-10 pointer-events-none"></div>
+                <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <ChefHat
                     className="w-5 h-5 text-emerald-600"
                     strokeWidth={1.5}
@@ -216,23 +217,19 @@ function App() {
                     Instructions
                   </h3>
                 </div>
-                <ol className="space-y-3">
+                <ol className="space-y-3 relative z-10">
                   {recipe.instructions.map((instruction, index) => (
                     <li
                       key={index}
-                      className="flex items-start space-x-3 animate-slide-in text-sm"
+                      className="flex items-start space-x-3 animate-slide-in text-sm border-b border-warmstone-200/30 pb-2 last:border-b-0"
                       style={{
-                        animationDelay: `${
-                          (index + recipe.ingredients.length) * 100
-                        }ms`,
+                        animationDelay: `${index * 100}ms`,
                       }}
                     >
-                      <span className="flex-shrink-0 w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-700 flex items-center justify-center text-xs">
+                      <span className="w-5 h-5 flex-shrink-0 rounded-full bg-emerald-500/80 text-white flex items-center justify-center text-xs font-bold">
                         {index + 1}
                       </span>
-                      <span className="text-warmstone-700 leading-relaxed">
-                        {instruction}
-                      </span>
+                      <span>{instruction}</span>
                     </li>
                   ))}
                 </ol>
