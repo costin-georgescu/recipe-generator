@@ -77,7 +77,7 @@ function App() {
         className={`flex-grow flex flex-col max-w-5xl w-full space-y-4 transition-all duration-700 ease-in-out ${
           recipe
             ? "justify-center transform translate-y-[-10vh]"
-            : "min-h-[66vh] justify-center"
+            : "justify-center"
         }`}
       >
         {/* Header */}
@@ -115,7 +115,7 @@ function App() {
               : "scale-100 opacity-100"
           }`}
         >
-          <div className="relative max-w-2xl mx-auto">
+          <div className="relative flex items-center max-w-2xl mx-auto">
             <textarea
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
@@ -127,7 +127,7 @@ function App() {
             <button
               type="submit"
               disabled={isLoading || !ingredients.trim()}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-lg bg-emerald-600/90 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200 group"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 transform rounded-lg bg-emerald-600/90 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200 group"
             >
               {isLoading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
