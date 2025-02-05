@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import aiRecipeService from "./services/aiRecipeService";
 import "./styles/animations.css";
+import "./styles/background.css";
 
 interface Recipe {
   title: string;
@@ -149,7 +150,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-warmgray-50 via-warmgray-100 to-warmgray-200 p-4 sm:p-8 font-sans text-warmstone-800 overflow-x-hidden ${
+      className={`min-h-screen bg-pattern p-4 sm:p-8 font-sans text-warmstone-800 overflow-x-hidden ${
         recipe ? "overflow-y-auto" : "overflow-y-hidden"
       }`}
     >
@@ -264,8 +265,7 @@ function App() {
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Ingredients Column */}
-              <div className="bg-[#fafaf5] rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.02)_50%)] bg-[size:30px_30px] opacity-10 pointer-events-none"></div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <UtensilsCrossed
                     className="w-5 h-5 text-emerald-600"
@@ -292,8 +292,7 @@ function App() {
               </div>
 
               {/* Instructions Column */}
-              <div className="bg-[#fafaf5] rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.02)_50%)] bg-[size:30px_30px] opacity-10 pointer-events-none"></div>
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <ChefHat
                     className="w-5 h-5 text-emerald-600"
