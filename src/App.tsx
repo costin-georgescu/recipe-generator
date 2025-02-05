@@ -9,6 +9,7 @@ import {
   Brain,
   Lightbulb,
 } from "lucide-react";
+import aiRecipeService from './services/aiRecipeService';
 
 interface Recipe {
   title: string;
@@ -19,10 +20,45 @@ interface Recipe {
 }
 
 function App() {
-  const [ingredients, setIngredients] = useState<string>("");
+  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [newIngredient, setNewIngredient] = useState<string>("");
+  const [generatedRecipe, setGeneratedRecipe] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isMultiline, setIsMultiline] = useState<boolean>(false);
+
+  const addIngredient = () => {
+    if (newIngredient.trim() && !ingredients.includes(newIngredient.trim())) {
+      setIngredients([...ingredients, newIngredient.trim()]);
+      setNewIngredient("");
+    }
+  };
+
+  const removeIngredient = (ingredientToRemove: string) => {
+    setIngredients(ingredients.filter(ingredient => ingredient !== ingredientToRemove));
+  };
+
+  const generateRecipe = async () => {
+    if (ingredients.length === 0) {
+      setError('Please add at least one ingredient');
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+    setGeneratedRecipe('');
+
+    try {
+      const recipe = await aiRecipeService.generateRecipe(ingredients);
+      setGeneratedRecipe(recipe);
+    } catch (err) {
+      setError('Failed to generate recipe. Please try again.');
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -35,7 +71,7 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!ingredients.trim()) return;
+    if (!ingredients.join(', ').trim()) return;
 
     setIsLoading(true);
 
@@ -63,7 +99,7 @@ function App() {
         difficulty: "Easy",
       });
       setIsLoading(false);
-      setIngredients("");
+      setIngredients([]);
       setIsMultiline(false);
     }, 1500);
   };
@@ -116,8 +152,8 @@ function App() {
         >
           <div className="relative flex items-center max-w-2xl mx-auto">
             <textarea
-              value={ingredients}
-              onChange={(e) => setIngredients(e.target.value)}
+              value={ingredients.join(', ')}
+              onChange={(e) => setIngredients(e.target.value.split(', '))}
               onKeyDown={handleKeyDown}
               placeholder="Enter your ingredients (e.g., chicken, rice, tomatoes...)"
               rows={isMultiline ? 3 : 1}
@@ -125,7 +161,7 @@ function App() {
             />
             <button
               type="submit"
-              disabled={isLoading || !ingredients.trim()}
+              disabled={isLoading || !ingredients.join(', ').trim()}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-2 transform rounded-lg bg-emerald-600/90 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200 group"
             >
               {isLoading ? (
@@ -237,6 +273,70 @@ function App() {
             </div>
           </div>
         )}
+        <div className="max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6">
+          <h1 className="text-3xl font-bold mb-6 text-center">AI Recipe Generator</h1>
+          <div className="mb-4 flex">
+            <input
+              type="text"
+              value={newIngredient}
+              onChange={(e) => setNewIngredient(e.target.value)}
+              placeholder="Enter an ingredient"
+              className="flex-grow p-2 border rounded-l"
+              onKeyPress={(e) => e.key === 'Enter' && addIngredient()}
+            />
+            <button 
+              onClick={addIngredient}
+              className="bg-blue-500 text-white p-2 rounded-r hover:bg-blue-600"
+            >
+              Add
+            </button>
+          </div>
+
+          <div className="mb-4">
+            <h2 className="font-semibold mb-2">Ingredients:</h2>
+            <div className="flex flex-wrap gap-2">
+              {ingredients.map(ingredient => (
+                <span 
+                  key={ingredient} 
+                  className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center"
+                >
+                  {ingredient}
+                  <button 
+                    onClick={() => removeIngredient(ingredient)}
+                    className="ml-2 text-red-500 hover:text-red-700"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <button 
+            onClick={generateRecipe}
+            disabled={isLoading}
+            className={`w-full p-3 rounded ${
+              isLoading 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-green-500 text-white hover:bg-green-600'
+            }`}
+          >
+            {isLoading ? 'Generating...' : 'Generate Recipe'}
+          </button>
+
+          {error && (
+            <div className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              {error}
+            </div>
+          )}
+
+          {generatedRecipe && (
+            <div className="mt-6 bg-gray-50 p-4 rounded-lg">
+              <h2 className="text-2xl font-bold mb-4">Generated Recipe</h2>
+              <pre className="whitespace-pre-wrap">{generatedRecipe}</pre>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
