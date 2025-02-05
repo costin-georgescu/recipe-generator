@@ -10,6 +10,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import aiRecipeService from "./services/aiRecipeService";
+import "./styles/animations.css";
 
 interface Recipe {
   title: string;
@@ -148,19 +149,21 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen bg-gradient-to-br from-warmgray-50 via-warmgray-100 to-warmgray-200 p-4 sm:p-8 font-sans text-warmstone-800 flex flex-col items-center justify-center transition-all duration-700 ease-in-out`}
+      className={`min-h-screen bg-gradient-to-br from-warmgray-50 via-warmgray-100 to-warmgray-200 p-4 sm:p-8 font-sans text-warmstone-800 overflow-x-hidden ${
+        recipe ? "overflow-y-auto" : "overflow-y-hidden"
+      }`}
     >
       <div
-        className={`flex-grow flex flex-col max-w-5xl w-full space-y-4 transition-all duration-700 ease-in-out ${
+        className={`mx-auto max-w-5xl flex flex-col transition-all duration-700 ease-in-out ${
           recipe
-            ? "justify-center transform translate-y-[-10vh]"
-            : "justify-center"
+            ? "space-y-8 pt-4"
+            : "min-h-[calc(100vh-4rem)] justify-center items-center space-y-8"
         }`}
       >
         {/* Header */}
         <div
-          className={`flex flex-col items-center justify-center mb-4 sm:mb-6 transition-transform duration-700 ease-in-out ${
-            recipe ? "transform -translate-y-4" : ""
+          className={`flex flex-col items-center transition-transform duration-700 ease-in-out ${
+            recipe ? "transform -translate-y-2" : ""
           }`}
         >
           <div className="flex items-center justify-center space-x-3 mb-3">
@@ -186,9 +189,9 @@ function App() {
         {/* Input Form */}
         <form
           onSubmit={handleSubmit}
-          className={`transition-all duration-700 ease-in-out ${
+          className={`w-full transition-all duration-700 ease-in-out ${
             recipe
-              ? "scale-95 opacity-90 hover:opacity-100 transform -translate-y-4"
+              ? "transform -translate-y-2 scale-95 opacity-90 hover:opacity-100"
               : "scale-100 opacity-100"
           }`}
         >
@@ -230,7 +233,7 @@ function App() {
 
         {/* Recipe Result */}
         {recipe && (
-          <div className="animate-fade-in space-y-6 transition-all duration-700 ease-in-out transform translate-y-4">
+          <div className="w-full animate-fade-in space-y-6 transition-all duration-700 ease-in-out">
             {/* Recipe Header */}
             <div className="text-center">
               <h2 className="text-2xl sm:text-3xl font-medium text-warmstone-900 mb-3">
