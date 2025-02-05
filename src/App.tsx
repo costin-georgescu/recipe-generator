@@ -183,7 +183,9 @@ function App() {
           </div>
           <p className="text-warmstone-600 text-sm sm:text-base font-light flex items-center space-x-2 justify-center">
             <Brain className="w-4 h-4 text-emerald-600" strokeWidth={1.5} />
-            <span>AI-Powered Culinary Creativity</span>
+            <span className="font-semibold">
+              AI-Powered Culinary Creativity
+            </span>
           </p>
         </div>
 
