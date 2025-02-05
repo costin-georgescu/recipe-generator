@@ -7,7 +7,7 @@ import {
   GaugeCircle,
   Sparkles,
   Brain,
-  Lightbulb,
+  Soup,
 } from "lucide-react";
 import aiRecipeService from "./services/aiRecipeService";
 import "./styles/animations.css";
@@ -168,10 +168,10 @@ function App() {
           }`}
         >
           <div className="flex items-center justify-center space-x-3 mb-3">
-            <div className="p-2.5 rounded-xl bg-gradient-to-br from-warmgray-100 to-warmgray-200 border border-warmgray-200/50 shadow-md">
-              <Lightbulb
-                className="w-7 h-7 sm:w-8 sm:h-8 text-warmstone-700"
-                strokeWidth={1.5}
+            <div className="p-2.5 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-600 shadow-lg">
+              <Soup
+                className="w-7 h-7 sm:w-8 sm:h-8 text-white"
+                strokeWidth={1.75}
               />
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-warmstone-900">
