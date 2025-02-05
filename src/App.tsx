@@ -21,25 +21,10 @@ interface Recipe {
 
 function App() {
   const [ingredients, setIngredients] = useState<string[]>([]);
-  const [newIngredient, setNewIngredient] = useState<string>("");
-  const [generatedRecipe, setGeneratedRecipe] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isMultiline, setIsMultiline] = useState<boolean>(false);
-
-  const addIngredient = () => {
-    if (newIngredient.trim() && !ingredients.includes(newIngredient.trim())) {
-      setIngredients([...ingredients, newIngredient.trim()]);
-      setNewIngredient("");
-    }
-  };
-
-  const removeIngredient = (ingredientToRemove: string) => {
-    setIngredients(
-      ingredients.filter((ingredient) => ingredient !== ingredientToRemove)
-    );
-  };
 
   const generateRecipe = async () => {
     if (ingredients.length === 0) {
@@ -49,11 +34,10 @@ function App() {
 
     setIsLoading(true);
     setError(null);
-    setGeneratedRecipe("");
 
     try {
       const recipeText = await aiRecipeService.generateRecipe(ingredients);
-      console.log("AI Response:", recipeText); // For debugging
+
       const parsedRecipe = parseRecipeText(recipeText);
       setRecipe(parsedRecipe);
       setIsLoading(false);
@@ -83,46 +67,54 @@ function App() {
   };
 
   const parseRecipeText = (text: string): Recipe => {
-    console.log("Parsing text:", text); // For debugging
-    const lines = text.split('\n').map(line => line.trim()).filter(Boolean);
-    
+    const lines = text
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
     let title = "";
     let cookingTime = "25 minutes";
     let difficulty = "Medium";
     let ingredients: string[] = [];
     let instructions: string[] = [];
     let currentSection = "";
-    
+
     for (const line of lines) {
       // Parse title
       if (line.toLowerCase().includes("recipe name:")) {
         title = line.split(":")[1]?.trim() || "Custom Recipe";
         continue;
       }
-      
+
       // Parse cooking time
       if (line.toLowerCase().includes("cooking time:")) {
         cookingTime = line.split(":")[1]?.trim() || "25 minutes";
         continue;
       }
-      
+
       // Parse difficulty
       if (line.toLowerCase().includes("difficulty:")) {
         difficulty = line.split(":")[1]?.trim() || "Medium";
         continue;
       }
-      
+
       // Identify sections
-      if (line.toLowerCase() === "ingredients:" || line.toLowerCase().includes("ingredients list:")) {
+      if (
+        line.toLowerCase() === "ingredients:" ||
+        line.toLowerCase().includes("ingredients list:")
+      ) {
         currentSection = "ingredients";
         continue;
       }
-      
-      if (line.toLowerCase() === "instructions:" || line.toLowerCase().includes("steps:")) {
+
+      if (
+        line.toLowerCase() === "instructions:" ||
+        line.toLowerCase().includes("steps:")
+      ) {
         currentSection = "instructions";
         continue;
       }
-      
+
       // Parse ingredients
       if (currentSection === "ingredients" && line.startsWith("-")) {
         const ingredient = line.substring(1).trim();
@@ -131,7 +123,7 @@ function App() {
         }
         continue;
       }
-      
+
       // Parse instructions
       if (currentSection === "instructions" && /^\d+\./.test(line)) {
         const instruction = line.replace(/^\d+\.\s*/, "").trim();
@@ -140,19 +132,17 @@ function App() {
         }
       }
     }
-    
+
     // Ensure we have at least empty arrays
     ingredients = ingredients.length > 0 ? ingredients : [];
     instructions = instructions.length > 0 ? instructions : [];
-    
-    console.log("Parsed Recipe:", { title, cookingTime, difficulty, ingredients, instructions }); // For debugging
-    
+
     return {
       title: title || "Custom Recipe",
       ingredients,
       instructions,
       cookingTime,
-      difficulty
+      difficulty,
     };
   };
 
@@ -231,6 +221,11 @@ function App() {
             <span>Press Shift + Enter for multiple lines</span>
             <Sparkles className="w-3 h-3 text-emerald-500" strokeWidth={1.5} />
           </p>
+          {error && (
+            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
         </form>
 
         {/* Recipe Result */}

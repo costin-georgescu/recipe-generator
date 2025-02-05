@@ -5,12 +5,6 @@ class AIRecipeService {
 
   constructor() {
     const apiKey = import.meta.env.VITE_HUGGINGFACE_API_KEY;
-    console.log("Environment variables:", {
-      VITE_HUGGINGFACE_API_KEY: import.meta.env.VITE_HUGGINGFACE_API_KEY
-        ? "present"
-        : "missing",
-      VITE_AI_MODEL: import.meta.env.VITE_AI_MODEL,
-    });
 
     if (!apiKey) {
       throw new Error("Hugging Face API key is missing");
