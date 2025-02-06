@@ -228,7 +228,7 @@ function App() {
             <Sparkles className="w-3 h-3 text-emerald-500" strokeWidth={1.5} />
           </p>
           {error && (
-            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="max-w-md w-full mx-auto mb-4 p-4 mt-7 rounded-lg bg-red-100 border border-red-400 text-red-700 text-center">
               {error}
             </div>
           )}
@@ -236,7 +236,7 @@ function App() {
 
         <div>
           {isLoading && (
-            <div className="mb-4 p-6 bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200 rounded-xl shadow-sm flex items-center justify-center space-x-3 animate-pulse">
+            <div className="mb-4 p-6 bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200 shadow-sm flex items-center justify-center space-x-3 animate-pulse rounded-lg">
               <Loader2 className="w-5 h-5 text-emerald-600" strokeWidth={2} />
               <span className="text-emerald-800 font-medium">
                 Crafting your recipe...

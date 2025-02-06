@@ -4,7 +4,7 @@ class AIRecipeService {
   private hf: HfInference;
 
   constructor() {
-    const apiKey = import.meta.env.VITE_HUGGINGFACE_API_KEY;
+    const apiKey = "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";
 
     if (!apiKey) {
       throw new Error("Hugging Face API key is missing");
