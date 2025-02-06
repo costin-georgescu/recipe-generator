@@ -6,9 +6,14 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   
   return {
+    base: './', 
     plugins: [react()],
     optimizeDeps: {
       exclude: ['lucide-react'],
+    },
+    build: {
+      outDir: 'dist',
+      assetsDir: '.', 
     },
     define: {
       'import.meta.env.VITE_HUGGINGFACE_API_KEY': JSON.stringify(env.VITE_HUGGINGFACE_API_KEY),

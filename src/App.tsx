@@ -200,12 +200,12 @@ function App() {
         >
           <div className="relative flex items-center max-w-2xl mx-auto">
             <textarea
+              placeholder="Enter ingredients (chicken, rice...)"
               value={ingredients.join(", ")}
               onChange={(e) => setIngredients(e.target.value.split(", "))}
               onKeyDown={handleKeyDown}
-              placeholder="Enter your ingredients (e.g., chicken, rice, tomatoes...)"
               rows={isMultiline ? 3 : 1}
-              className="w-full px-4 py-3 pr-12 rounded-xl border border-warmstone-300/50 bg-white shadow-sm focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/25 transition-all duration-200 resize-none text-warmstone-800 placeholder-warmstone-400/60 text-sm sm:text-base overflow-hidden hover:shadow-md"
+              className="w-full px-4 py-3 pr-12 rounded-xl border border-warmstone-300/50 bg-white shadow-sm focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/25 transition-all duration-200 resize-none text-warmstone-800 placeholder-warmstone-400/60 text-sm sm:text-base break-words whitespace-normal hover:shadow-md"
             />
             <button
               type="submit"
