@@ -234,6 +234,17 @@ function App() {
           )}
         </form>
 
+        <div>
+          {isLoading && (
+            <div className="mb-4 p-6 bg-gradient-to-r from-emerald-50 to-emerald-100 border border-emerald-200 rounded-xl shadow-sm flex items-center justify-center space-x-3 animate-pulse">
+              <Loader2 className="w-5 h-5 text-emerald-600" strokeWidth={2} />
+              <span className="text-emerald-800 font-medium">
+                Crafting your recipe...
+              </span>
+            </div>
+          )}
+        </div>
+
         {/* Recipe Result */}
         {recipe && (
           <div className="w-full animate-fade-in space-y-6 transition-all duration-700 ease-in-out">
