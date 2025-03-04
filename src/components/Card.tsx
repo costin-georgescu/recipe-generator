@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card = ({ title, icon, items, type }: CardProps) => {
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 h-full w-full min-h-[400px]">
       <div className="flex items-center space-x-2 mb-4 relative z-10">
         {icon}
         <h3 className="text-lg font-medium text-warmstone-900">{title}</h3>
