@@ -1,6 +1,5 @@
 import { ChefHat, UtensilsCrossed } from "lucide-react";
-import "./styles/animations.css";
-import "./styles/background.css";
+import "./App.css";
 import Header from "./components/Header";
 import SearchField from "./components/SearchField";
 import useRecipeStore from "./stores/recipeStore";
