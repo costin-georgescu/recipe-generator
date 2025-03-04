@@ -10,8 +10,7 @@ import "./styles/background.css";
 import Header from "./components/Header";
 import SearchField from "./components/SearchField";
 import useRecipeStore from "./stores/recipeStore";
-
-
+import Card from "./components/Card";
 
 function App() {
   const { recipe, isLoading } = useRecipeStore();
@@ -79,6 +78,7 @@ function App() {
             {/* Two Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Ingredients Column */}
+              {/* 
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <UtensilsCrossed
@@ -104,8 +104,10 @@ function App() {
                   ))}
                 </ul>
               </div>
+              */}
 
               {/* Instructions Column */}
+              {/* 
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex items-center space-x-2 mb-4 relative z-10">
                   <ChefHat
@@ -133,6 +135,20 @@ function App() {
                   ))}
                 </ol>
               </div>
+              */}
+
+              <Card 
+                title="Ingredients"
+                icon={<UtensilsCrossed className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />}
+                items={recipe.ingredients}
+                type="ingredients"
+              />
+              <Card 
+                title="Instructions"
+                icon={<ChefHat className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />}
+                items={recipe.instructions}
+                type="instructions"
+              />
             </div>
           </div>
         )}
