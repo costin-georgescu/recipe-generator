@@ -4,13 +4,16 @@ class AIRecipeService {
   private hf: HfInference;
 
   constructor() {
-    const apiKey = "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";
+    const apiKey = import.meta.env.VITE_HUGGINGFACE_API_KEY;
 
     if (!apiKey) {
+      console.error(
+        "API Key is missing. Check your .env file at the project root."
+      );
       throw new Error("Hugging Face API key is missing");
     }
 
-    this.hf = new HfInference(apiKey);
+    this.hf = new HfInference(apiKey as string);
   }
 
   async generateRecipe(
@@ -21,7 +24,7 @@ class AIRecipeService {
       const prompt = this.constructPrompt(ingredients, cuisine);
 
       const response = await this.hf.textGeneration({
-        model: "tiiuae/falcon-7b-instruct",
+        model: import.meta.env.VITE_AI_MODEL || "tiiuae/falcon-7b-instruct",
         inputs: prompt,
         parameters: {
           max_new_tokens: 800,
