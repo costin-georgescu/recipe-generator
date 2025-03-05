@@ -1,6 +1,6 @@
 const Skeleton = () => {
   return (
-    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 h-full w-full min-h-[400px] min-w-full animate-pulse">
+    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 h-full w-full min-h-[400px] animate-pulse flex-1">
       <div className="flex items-center space-x-2 mb-4">
         <div className="w-5 h-5 rounded-full bg-emerald-200"></div>
         <div className="h-5 w-24 bg-emerald-100 rounded"></div>
