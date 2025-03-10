@@ -1,8 +1,7 @@
-import { useState, KeyboardEvent } from "react";
-import useRecipeStore from "../stores/recipeStore";
-import aiRecipeService from "../services/aiRecipeService";
-import { Loader2, ChefHat, Sparkles } from "lucide-react";
-
+import { useState, KeyboardEvent } from 'react';
+import useRecipeStore from '../stores/recipeStore';
+import aiRecipeService from '../services/aiRecipeService';
+import { Loader2, ChefHat, Sparkles } from 'lucide-react';
 
 interface Recipe {
   title: string;
@@ -20,13 +19,13 @@ const SearchField = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!ingredients.join(", ").trim()) return;
+    if (!ingredients.join(', ').trim()) return;
     await generateRecipe();
   };
 
   const generateRecipe = async () => {
     if (ingredients.length === 0) {
-      setError("Please add at least one ingredient");
+      setError('Please add at least one ingredient');
       return;
     }
 
@@ -41,74 +40,73 @@ const SearchField = () => {
       setIsLoading(false);
       setIngredients([]);
       setIsMultiline(false);
-    } catch (err) {
-      setError("Failed to generate recipe. Please try again.");
-      console.error(err);
+    } catch {
+      setError('Failed to generate recipe. Please try again.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSubmit(e);
-    } else if (e.key === "Enter" && e.shiftKey) {
+    } else if (e.key === 'Enter' && e.shiftKey) {
       setIsMultiline(true);
     }
   };
 
   const parseRecipeText = (text: string): Recipe => {
     const lines = text
-      .split("\n")
+      .split('\n')
       .map((line) => line.trim())
       .filter(Boolean);
 
-    let title = "";
-    let cookingTime = "25 minutes";
-    let difficulty = "Medium";
+    let title = '';
+    let cookingTime = '25 minutes';
+    let difficulty = 'Medium';
     let ingredients: string[] = [];
     let instructions: string[] = [];
-    let currentSection = "";
+    let currentSection = '';
 
     for (const line of lines) {
       // Parse title
-      if (line.toLowerCase().includes("recipe name:")) {
-        title = line.split(":")[1]?.trim() || "Custom Recipe";
+      if (line.toLowerCase().includes('recipe name:')) {
+        title = line.split(':')[1]?.trim() || 'Custom Recipe';
         continue;
       }
 
       // Parse cooking time
-      if (line.toLowerCase().includes("cooking time:")) {
-        cookingTime = line.split(":")[1]?.trim() || "25 minutes";
+      if (line.toLowerCase().includes('cooking time:')) {
+        cookingTime = line.split(':')[1]?.trim() || '25 minutes';
         continue;
       }
 
       // Parse difficulty
-      if (line.toLowerCase().includes("difficulty:")) {
-        difficulty = line.split(":")[1]?.trim() || "Medium";
+      if (line.toLowerCase().includes('difficulty:')) {
+        difficulty = line.split(':')[1]?.trim() || 'Medium';
         continue;
       }
 
       // Identify sections
       if (
-        line.toLowerCase() === "ingredients:" ||
-        line.toLowerCase().includes("ingredients list:")
+        line.toLowerCase() === 'ingredients:' ||
+        line.toLowerCase().includes('ingredients list:')
       ) {
-        currentSection = "ingredients";
+        currentSection = 'ingredients';
         continue;
       }
 
       if (
-        line.toLowerCase() === "instructions:" ||
-        line.toLowerCase().includes("steps:")
+        line.toLowerCase() === 'instructions:' ||
+        line.toLowerCase().includes('steps:')
       ) {
-        currentSection = "instructions";
+        currentSection = 'instructions';
         continue;
       }
 
       // Parse ingredients
-      if (currentSection === "ingredients" && line.startsWith("-")) {
+      if (currentSection === 'ingredients' && line.startsWith('-')) {
         const ingredient = line.substring(1).trim();
         if (ingredient) {
           ingredients.push(ingredient);
@@ -117,8 +115,8 @@ const SearchField = () => {
       }
 
       // Parse instructions
-      if (currentSection === "instructions" && /^\d+\./.test(line)) {
-        const instruction = line.replace(/^\d+\.\s*/, "").trim();
+      if (currentSection === 'instructions' && /^\d+\./.test(line)) {
+        const instruction = line.replace(/^\d+\.\s*/, '').trim();
         if (instruction) {
           instructions.push(instruction);
         }
@@ -130,7 +128,7 @@ const SearchField = () => {
     instructions = instructions.length > 0 ? instructions : [];
 
     return {
-      title: title || "Custom Recipe",
+      title: title || 'Custom Recipe',
       ingredients,
       instructions,
       cookingTime,
@@ -143,22 +141,22 @@ const SearchField = () => {
       onSubmit={handleSubmit}
       className={`w-full transition-all duration-700 ease-in-out ${
         recipe
-          ? "transform -translate-y-2 scale-95 opacity-90 hover:opacity-100"
-          : "scale-100 opacity-100"
+          ? 'transform -translate-y-2 scale-95 opacity-90 hover:opacity-100'
+          : 'scale-100 opacity-100'
       }`}
     >
       <div className="relative flex items-center max-w-2xl mx-auto">
         <textarea
           placeholder="Enter ingredients (chicken, rice...)"
-          value={ingredients.join(", ")}
-          onChange={(e) => setIngredients(e.target.value.split(", "))}
+          value={ingredients.join(', ')}
+          onChange={(e) => setIngredients(e.target.value.split(', '))}
           onKeyDown={handleKeyDown}
           rows={isMultiline ? 3 : 1}
           className="w-full px-4 py-3 pr-12 rounded-xl border border-warmstone-300/50 bg-white shadow-sm focus:border-emerald-400/50 focus:ring-1 focus:ring-emerald-400/25 transition-all duration-200 resize-none text-warmstone-800 placeholder-warmstone-400/60 text-sm sm:text-base break-words whitespace-normal hover:shadow-md"
         />
         <button
           type="submit"
-          disabled={isLoading || !ingredients.join(", ").trim()}
+          disabled={isLoading || !ingredients.join(', ').trim()}
           className="absolute right-3 top-1/2 -translate-y-1/2 p-2 transform rounded-lg bg-emerald-600/90 text-white hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-200 group"
         >
           {isLoading ? (
