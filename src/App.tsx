@@ -1,12 +1,10 @@
-import { ChefHat, UtensilsCrossed } from 'lucide-react';
 import './App.css';
 import Header from './components/Header';
 import SearchField from './components/SearchField';
 import useRecipeStore from './stores/recipeStore';
-import Card from './components/Card';
-import RecipeHeader from './components/RecipeHeader';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import Footer from './components/Footer';
+import RecipeDisplay from './components/RecipeDisplay';
 
 function App() {
   const { recipe, isLoading } = useRecipeStore();
@@ -29,35 +27,7 @@ function App() {
 
         {isLoading && <LoadingSkeleton />}
 
-        {!isLoading && recipe && (
-          <div className="w-full animate-fade-in space-y-6 transition-all duration-700 ease-in-out">
-            <RecipeHeader />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card
-                title="Ingredients"
-                icon={
-                  <UtensilsCrossed
-                    className="w-5 h-5 text-emerald-600"
-                    strokeWidth={1.5}
-                  />
-                }
-                items={recipe.ingredients}
-                type="ingredients"
-              />
-              <Card
-                title="Instructions"
-                icon={
-                  <ChefHat
-                    className="w-5 h-5 text-emerald-600"
-                    strokeWidth={1.5}
-                  />
-                }
-                items={recipe.instructions}
-                type="instructions"
-              />
-            </div>
-          </div>
-        )}
+        {!isLoading && recipe && <RecipeDisplay />}
       </div>
       <Footer />
     </div>
