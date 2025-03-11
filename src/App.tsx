@@ -5,7 +5,7 @@ import SearchField from './components/SearchField';
 import useRecipeStore from './stores/recipeStore';
 import Card from './components/Card';
 import RecipeHeader from './components/RecipeHeader';
-import Skeleton from './components/Skeleton';
+import LoadingSkeleton from './components/LoadingSkeleton';
 import Footer from './components/Footer';
 
 function App() {
@@ -27,14 +27,7 @@ function App() {
         <Header />
         <SearchField />
 
-        {isLoading && (
-          <div className="w-full animate-fade-in space-y-6 transition-all duration-700 ease-in-out">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Skeleton />
-              <Skeleton />
-            </div>
-          </div>
-        )}
+        {isLoading && <LoadingSkeleton />}
 
         {!isLoading && recipe && (
           <div className="w-full animate-fade-in space-y-6 transition-all duration-700 ease-in-out">
