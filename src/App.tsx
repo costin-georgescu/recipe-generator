@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/Header';
 import SearchField from './components/SearchField';
-import useRecipeStore from './stores/recipeStore';
+import useRecipeStore from './recipeStore';
 import LoadingSkeleton from './components/LoadingSkeleton';
 import Footer from './components/Footer';
 import RecipeDisplay from './components/RecipeDisplay';

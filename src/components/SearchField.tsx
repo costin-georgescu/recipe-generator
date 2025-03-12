@@ -1,5 +1,5 @@
-import { useState, KeyboardEvent } from 'react';
-import useRecipeStore from '../stores/recipeStore';
+import { KeyboardEvent } from 'react';
+import useRecipeStore from '../recipeStore';
 import aiRecipeService from '../services/aiRecipeService';
 import { Loader2, ChefHat, Sparkles } from 'lucide-react';
 
@@ -12,10 +12,18 @@ interface Recipe {
 }
 
 const SearchField = () => {
-  const { recipe, isLoading, error, setRecipe, setIsLoading, setError } =
-    useRecipeStore();
-  const [ingredients, setIngredients] = useState<string[]>([]);
-  const [isMultiline, setIsMultiline] = useState<boolean>(false);
+  const {
+    recipe,
+    isLoading,
+    error,
+    ingredients,
+    isMultiline,
+    setRecipe,
+    setIngredients,
+    setIsMultiline,
+    setIsLoading,
+    setError,
+  } = useRecipeStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

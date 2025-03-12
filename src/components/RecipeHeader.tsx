@@ -1,5 +1,5 @@
-import { Clock, GaugeCircle } from "lucide-react";
-import useRecipeStore from "../stores/recipeStore";
+import { Clock, GaugeCircle } from 'lucide-react';
+import useRecipeStore from '../recipeStore';
 
 const RecipeHeader = () => {
   const { recipe } = useRecipeStore();

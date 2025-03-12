@@ -1,5 +1,5 @@
 import { ChefHat, UtensilsCrossed } from 'lucide-react';
-import useRecipeStore from '../stores/recipeStore';
+import useRecipeStore from '../recipeStore';
 import Card from './Card';
 import RecipeHeader from './RecipeHeader';
 import LoadingSkeleton from './LoadingSkeleton';
@@ -33,10 +33,7 @@ const RecipeDisplay = () => {
         <Card
           title="Instructions"
           icon={
-            <ChefHat
-              className="w-5 h-5 text-emerald-600"
-              strokeWidth={1.5}
-            />
+            <ChefHat className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
           }
           items={recipe.instructions}
           type="instructions"
