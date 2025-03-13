@@ -1,13 +1,15 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface CardProps {
   title: string;
   icon: ReactNode;
   items: string[];
-  type: "ingredients" | "instructions";
+  type: 'ingredients' | 'instructions';
 }
 
 const Card = ({ title, icon, items, type }: CardProps) => {
+  const isEmpty = items.length === 0;
+
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 border border-warmstone-200/30 shadow-sm hover:shadow-md transition-all duration-300 h-full w-full min-h-[400px]">
       <div className="flex items-center space-x-2 mb-4 relative z-10">
@@ -15,7 +17,11 @@ const Card = ({ title, icon, items, type }: CardProps) => {
         <h3 className="text-lg font-medium text-warmstone-900">{title}</h3>
       </div>
 
-      {type === "ingredients" ? (
+      {isEmpty ? (
+        <div className="flex items-center justify-center h-[300px] text-warmstone-500 text-sm italic">
+          Sorry, no recipe available. Please try a different search.
+        </div>
+      ) : type === 'ingredients' ? (
         <ul className="space-y-2.5 relative z-10">
           {items.map((item, index) => (
             <li

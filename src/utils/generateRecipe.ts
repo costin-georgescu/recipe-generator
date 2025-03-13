@@ -72,7 +72,24 @@ const parseRecipeText = (text: string): Recipe => {
   ingredients = ingredients.length > 0 ? ingredients : [];
   instructions = instructions.length > 0 ? instructions : [];
 
-  // Return statement moved outside the loop
+  // Validate that we have meaningful content
+  const hasValidContent = ingredients.length > 0 && instructions.length > 0;
+
+  if (!hasValidContent) {
+    // Provide informative defaults if we're missing data
+    if (ingredients.length === 0) {
+      ingredients = [
+        'Could not identify ingredients. Please try with different ingredients.',
+      ];
+    }
+
+    if (instructions.length === 0) {
+      instructions = [
+        'Could not generate cooking instructions. Please try with different ingredients.',
+      ];
+    }
+  }
+
   return {
     title: title || 'Custom Recipe',
     ingredients,
@@ -89,8 +106,15 @@ const createStructuredRecipe = async (
     throw new Error('Please add at least one ingredient');
   }
 
-  const recipeText = await aiRecipeService.fetchRecipeFromAI(ingredients);
-  return parseRecipeText(recipeText);
+  try {
+    const recipeText = await aiRecipeService.fetchRecipeFromAI(ingredients);
+    return parseRecipeText(recipeText);
+  } catch (error) {
+    console.error('Failed to generate recipe:', error);
+    throw new Error(
+      'Failed to generate a complete recipe. Please try again with different ingredients.'
+    );
+  }
 };
 
 export default createStructuredRecipe;
