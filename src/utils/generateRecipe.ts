@@ -1,7 +1,7 @@
 import aiRecipeService from '../services/aiRecipeService';
 import { Recipe } from '../recipeStore';
 
-export const parseRecipeText = (text: string): Recipe => {
+const parseRecipeText = (text: string): Recipe => {
   const lines = text
     .split('\n')
     .map((line) => line.trim())
@@ -82,7 +82,7 @@ export const parseRecipeText = (text: string): Recipe => {
   };
 };
 
-export const generateRecipe = async (
+const generateRecipe = async (
   ingredients: string[]
 ): Promise<Recipe> => {
   if (ingredients.length === 0) {
@@ -92,3 +92,5 @@ export const generateRecipe = async (
   const recipeText = await aiRecipeService.generateRecipe(ingredients);
   return parseRecipeText(recipeText);
 };
+
+export default generateRecipe;

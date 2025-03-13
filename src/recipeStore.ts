@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { generateRecipe as generateRecipeUtil } from './utils/generateRecipe';
+import generateRecipeUtil from './utils/generateRecipe';
 
 export interface Recipe {
   title: string;
