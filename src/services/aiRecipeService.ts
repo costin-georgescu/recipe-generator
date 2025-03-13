@@ -16,7 +16,7 @@ class AIRecipeService {
     this.hf = new HfInference(apiKey as string);
   }
 
-  async generateRecipe(
+  async fetchRecipeFromAI(
     ingredients: string[],
     cuisine?: string
   ): Promise<string> {

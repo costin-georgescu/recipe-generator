@@ -82,15 +82,15 @@ const parseRecipeText = (text: string): Recipe => {
   };
 };
 
-const generateRecipe = async (
+const createStructuredRecipe = async (
   ingredients: string[]
 ): Promise<Recipe> => {
   if (ingredients.length === 0) {
     throw new Error('Please add at least one ingredient');
   }
 
-  const recipeText = await aiRecipeService.generateRecipe(ingredients);
+  const recipeText = await aiRecipeService.fetchRecipeFromAI(ingredients);
   return parseRecipeText(recipeText);
 };
 
-export default generateRecipe;
+export default createStructuredRecipe;
